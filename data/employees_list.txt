@@ -1,0 +1,5 @@
+ABC Company
+id,first_name,last_name,date_of_birth,start_year,position,salary
+1,John,Doe,1980-05-15,2010,Manager,160000
+2,Jane,Smith,1975-12-20,2005,Engineer,90000 
+3,Alice,Johnson,1990-08-10,2015,Analyst,75000
