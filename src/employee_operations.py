@@ -65,13 +65,31 @@ def update_employee():
 
     """
 
-    # current_dir = os.path.dirname(__file__)
-    # data_dir = os.path.abspath(os.path.join(current_dir, "../data/employees_list.txt"))
-    # print(data_dir)
-    # lines = ''
-    # with open(data_dir, 'r') as file:
-    #     lines = file.readlines()
-    # print(lines)
+    
+    # Prompt the user to input the ID of the employee to be updated
+    employee_id = int(input("Enter the ID of the employee to be updated: "))
+
+    # Find the employee with the given ID
+    employee = next((employee for employee in employee if employee.id == employee_id), None)
+
+    # Check if the employee exists
+    if employee:
+        # Prompt the user to input the new name, department, and salary
+        name = input("Enter the new name: ")
+        department = input("Enter the new department: ")
+        salary = float(input("Enter the new salary: "))
+
+        # Update the employee's information
+        employee.name = name
+        employee.department = department
+        employee.salary = salary
+
+        # Print a success message
+        print(f"Employee {employee_id} has been updated.")
+    else:
+        # Print an error message if the employee does not exist
+        print(f"Employee {employee_id} not found.")
+    
 
 
 def get_last_id():
