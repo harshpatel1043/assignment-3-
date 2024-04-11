@@ -22,7 +22,7 @@ def main_menu():
         print("2. Delete Employee")
         print("3. Update Employee")
         print("4. Generate Reports")
-        print("5. Exit Exit")
+        print("5. Exit")
 
         choice = input("Enter your choice: ")
 
