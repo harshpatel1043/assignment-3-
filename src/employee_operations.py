@@ -25,16 +25,10 @@ def add_employee():
     current_dir = os.path.dirname(__file__)
     data_dir = os.path.abspath(os.path.join(current_dir, "../data/employees_list.txt"))
 
-    # print(data_dir)
+
     with open(data_dir, 'a') as file:
         file.write(f"{get_last_id() + 1},{first_name},{last_name},{date_of_birth},{start_year},{position},{salary}\n")
-    # print(lines)
-    # with open(data_dir, 'a') as file:
-    #     # file.write(f"{get_last_id() + 1},{first_name},{last_name},{date_of_birth},{start_year},{position},{salary}\n")
-    #     first_line= file.readline()
-    # print(first_line)
-    # while True:
-    #     pass
+
 def delete_employee():
     """
     Delete Employee Function
@@ -43,18 +37,41 @@ def delete_employee():
     removes the employee from the system.
 
     """
-    # Prompt the user to input the ID of the employee to be deleted
+
     employee_id = input("Enter the ID of the employee to be deleted: ")
 
-    # Read all lines from the file except the one with the specified employee ID
     current_dir = os.path.dirname(__file__)
     data_dir = os.path.abspath(os.path.join(current_dir, "../data/employees_list.txt"))
+
+    # Load existing employees data
+    employees = []
     with open(data_dir, 'r') as file:
-        lines = file.readlines()
-    with open('employees_list.txt', 'w') as file:
-        for line in lines:
-            if not line.startswith(employee_id + ','):
-                file.write(line)
+        for line in file:
+            employee_data = line.strip().split(',')
+            employees.append(Employee(*employee_data))
+
+    # Find the index of the employee with the given ID
+    employee_index = None
+    for i, emp in enumerate(employees):
+        if emp.id == employee_id:
+            employee_index = i
+            break
+
+    # Check if the employee exists
+    if employee_index is not None:
+        # Remove the employee from the list
+        del employees[employee_index]
+
+        # Save the updated data back to the file
+        with open(data_dir, 'w') as file:
+            for emp in employees:
+                file.write(f"{emp.id},{emp.first_name},{emp.last_name},{emp.date_of_birth},{emp.start_year},{emp.position},{emp.salary}\n")
+
+        # Print a success message
+        print(f"Employee {employee_id} has been deleted.")
+    else:
+        # Print an error message if the employee does not exist
+        print(f"Employee {employee_id} not found.")
 
 def update_employee():
     """
@@ -64,28 +81,31 @@ def update_employee():
     allows the user to modify the employee's information such as name, department, or salary.
 
     """
+    current_dir = os.path.dirname(__file__)
+    data_dir = os.path.abspath(os.path.join(current_dir, "../data/employees_list.txt"))
 
-    
-    # Prompt the user to input the ID of the employee to be updated
     employee_id = int(input("Enter the ID of the employee to be updated: "))
 
     # Find the employee with the given ID
-    employee = next((employee for employee in employee if employee.id == employee_id), None)
+    employee = next((emp for emp in employees if emp.id == employee_id), None)
 
     # Check if the employee exists
     if employee:
-        # Prompt the user to input the new name, department, and salary
-        name = input("Enter the new name: ")
+        # Prompt the user to input the new department and salary
         department = input("Enter the new department: ")
         salary = float(input("Enter the new salary: "))
 
-        # Update the employee's information
-        employee.name = name
+        # Update the employee's department and salary
         employee.department = department
         employee.salary = salary
 
         # Print a success message
         print(f"Employee {employee_id} has been updated.")
+
+        # Save the updated data back to the file
+        with open(data_dir, 'w') as file:
+            for emp in employees:
+                file.write(f"{emp.id},{emp.first_name},{emp.last_name},{emp.date_of_birth},{emp.start_year},{emp.position},{emp.salary}\n")
     else:
         # Print an error message if the employee does not exist
         print(f"Employee {employee_id} not found.")

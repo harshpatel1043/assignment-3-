@@ -6,3 +6,4 @@ id,first_name,last_name,date_of_birth,start_year,position,salary
 4,mahdi,es,1983-03-03,2005,knkn,6532152.0
 5,Kartik,Tomar,2002-06-06,2021,Member,95000.0
 6,harsh,pstel,909999999,78777,89998,888.0
+7,maneet,chahar,2001-06-26,2022,head,4000000.0
